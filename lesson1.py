@@ -3,12 +3,10 @@
 # st = 'as 23 fdfdg544' введена строка
 # 2,3,5,4,4        #вивело в консолі.
 
-string = 'as 23 fdfdg544'
+string = 'as 23 fdf33dg544 78'
 
-digits_from_string = [int(i) for i in string if i.isdigit()]
-# print(digits_from_string)
-
-
+digits_from_string = str([int(i) for i in string if i.isdigit()])
+print(digits_from_string)
 ##################################################################################
 
 # 2)написати прогу яка вибирає зі введеної строки числа і виводить їх
@@ -17,10 +15,9 @@ digits_from_string = [int(i) for i in string if i.isdigit()]
 # st = 'as 23 fdfdg544 34' #введена строка
 # 23, 544, 34              #вивело в консолі
 
-st = 'as 23 fdfdg544 34'
 
-splitted = [i for i in st if i.isdigit() or i == ' ']
-# print(''.join(splitted).strip().replace(' ', ', '))
+splitted = [i for i in string if i.isdigit() or i == ' ']
+print(''.join(splitted).strip().replace(' ', ', '))
 
 ###############################################################################
 
@@ -56,12 +53,13 @@ def show_list():
 # - створити функцію яка приймає три числа та виводить та повертає найбільше.
 def max_num(a, b, c):
     print(max(a, b, c))
+    return max(a, b, c)
 
 
 # - створити функцію яка приймає будь-яку кількість чисел, повертає найменьше, а виводить найбільше
 def high_low_numbers(*args):
-    print(max(*args))
-    return min(*args)
+    print(max(args))
+    return min(args)
 
 
 # - створити функцію яка повертає найбільше число з ліста
@@ -127,21 +125,21 @@ no_duplicates_list = list(no_duplicates_set)
 
 # 4) переробити це завдання під меню
 
-user_input = int(input(
-    '1. Find min number\n'
-    '2. Remove same values\n'
-    '3. Make every third value = "x"\n'
-    '4. Middle value\n'
-    '5. Exit\n'
-    'Make a choice: '))
-
-if user_input == 1:
-    print(min_number)
-elif user_input == 2:
-    print(no_duplicates_list)
-elif user_input == 3:
-    print('xx')
-elif user_input == 4:
-    print(middle_value(no_duplicates_list))
-else:
-    quit()
+# user_input = str(input(
+#     '1. Find min number\n'
+#     '2. Remove same values\n'
+#     '3. Make every third value = "x"\n'
+#     '4. Middle value\n'
+#     '5. Exit\n'
+#     'Make a choice: '))
+#
+# if user_input == '1':
+#     print(min_number)
+# elif user_input == '2':
+#     print(no_duplicates_list)
+# elif user_input == '3':
+#     print('xx')
+# elif user_input == '4':
+#     print(middle_value(no_duplicates_list))
+# else:
+#     quit()
