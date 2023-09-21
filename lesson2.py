@@ -2,21 +2,32 @@
 # - перший записує в список нову справу
 #                                - другий повертає всі записи
 
-def notebook(todos: list) -> ():
-    todos_list = []
 
-    def add_todo(todo: list):
-        todos_list.append([i for i in enumerate(todo, start=1)])
+def notebook():
+    todos_list: list[str] = []
 
-    add_todo(todos)
+    def add_todo(todo: str) -> None:
+        nonlocal todos_list
+        todos_list.append(todo)
 
-    def get_all():
-        return todos_list[0]
+    def get_all() -> list[str]:
+        nonlocal todos_list
+        return todos_list
 
-    return get_all()
+    return add_todo, get_all
 
 
-print(notebook(['car wash', 'school', 'english']))
+add1, all1 = notebook()
+add2, all2 = notebook()
+
+add1('awake')
+add1('awake')
+
+add2('luck')
+add2('hug')
+
+print(all1())
+print(all2())
 
 
 # 3) створити функцію котра буде повертати сумму розрядів числа у вигляді строки (також використовуемо типізацію)
@@ -27,10 +38,22 @@ print(notebook(['car wash', 'school', 'english']))
 # expanded_form(70304) # return '70000 + 300 + 4'
 
 def expanded_form(number: int) -> str:
-    pass
+    st = str(number)
+    length = len(st) - 1
+    res: list[str] = []
+
+    for i, v in enumerate(st):
+        if v != '0':
+            res.append(v + '0' * (length - i))
+
+    return ' + '.join(res) + f' = {st}'
 
 
-# 4) створити декоратор котрий буде підраховувати скільки разів була запущена функція продекорована цим декоратором, та буде виводити це значення після виконання функцій
+print(expanded_form(500143))
+
+
+# 4) створити декоратор котрий буде підраховувати скільки разів була запущена функція продекорована цим декоратором,
+# та буде виводити це значення після виконання функцій
 
 def counter(func):
     count = 0
@@ -56,6 +79,7 @@ def adder1():
 @counter
 def adder2():
     print("ADDER 2")
+
 
 adder1()
 adder2()
