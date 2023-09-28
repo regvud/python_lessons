@@ -21,6 +21,7 @@
 # полю покупку * має бути змога показати найдорожчу покупку * має бути можливість видаляти покупку по id (ну і меню
 # на це все)
 
+
 class Purchase:
     id = 0
 
@@ -29,9 +30,11 @@ class Purchase:
         self.price = price
         Purchase.id += 1
 
-    def return_id(self):
-        return self.id
+    def __repr__(self):
+        return f'name: {self.name}, price: {self.price}, id: {self.id}'
 
+
+buy_book = []
 
 while True:
     init_input = input('Choose option: ')
@@ -42,13 +45,14 @@ while True:
             input_price = int(input('How much is it?: '))
 
             purchase = Purchase(input_name, input_price)
+            buy_book.append(purchase)
 
-            print(purchase.return_id())
-            # try:
-            #     with open('buy-book', 'a') as file:
-            #         file.write(f'name: {purchase.name} price: {purchase.price} id: {purchase.id}\n')
-            # except Exception as err:
-            #     print(err)
+            try:
+                with open('buy-book.txt', 'w+') as file:
+                    for buy in buy_book:
+                        file.write(f'{buy}\n')
+            except Exception as err:
+                print(err)
 
         case '2':
             pass
