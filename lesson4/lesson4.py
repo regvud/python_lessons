@@ -36,6 +36,16 @@ class BuyBook:
         self.__data: list[Purchase] = []
         self.__read_file()
 
+    @staticmethod
+    def __input_int(msg: str) -> int:
+        while True:
+            ans = input(msg)
+
+            if not ans.isdigit():
+                continue
+
+            return int(ans)
+
     def __read_file(self):
         try:
             with open('buy-book.json', 'r') as file:
@@ -43,23 +53,25 @@ class BuyBook:
         except (Exception,):
             pass
 
+    def __write_file(self):
+        try:
+            with open('buy-book.json', 'w') as file:
+                json.dump(self.__data, file)
+        except (Exception,):
+            pass
+
     def __add(self):
         input_name = input('What do you want to buy?: ')
-        input_price = int(input('How much is it?: '))
+        input_price = self.__input_int('How much is it?: ')
         pk = self.__data[-1]['id'] + 1 if self.__data else 1
 
         purchase = Purchase(id=pk, name=input_name, price=input_price)
         self.__data.append(purchase)
-
-        try:
-            with open('buy-book.json', 'w') as file:
-                json.dump(self.__data, file)
-        except Exception as err:
-            print(err)
+        self.__write_file()
 
     def __show_items(self):
         for i, v in enumerate(self.__data, start=1):
-            print(i, v)
+            print(f'{i}) {v}')
 
     def __search(self):
         search = input('What to search: ')
@@ -69,8 +81,17 @@ class BuyBook:
                     print(item)
 
     def __delete(self):
-        item_to_delete = input('Item id: ')
-        delete = next(lambda x: x)
+        self.__show_items()
+
+        pk = self.__input_int('Item id to delete: ')
+        index = next((i for i, v in enumerate(self.__data) if v['id'] == pk), None)
+
+        if index is None:
+            print('Incorrect index')
+            return
+
+        del self.__data[index]
+        self.__write_file()
 
     def __most_expensive(self):
         # most_expensive = list(filter(lambda x: x['price'], self.__data))
@@ -80,14 +101,16 @@ class BuyBook:
 
     def menu(self):
         while True:
+            print('\nOptions')
             print('1. Add')
             print('2. Show items')
             print('3. Search')
             print('4. Most expensive item')
+            print('5. Delete by Id')
 
-            __init_input = input('\nChoose option: ')
+            option = input('\nChoose option: ')
 
-            match __init_input:
+            match option:
                 case '1':
                     self.__add()
                 case '2':
@@ -96,6 +119,8 @@ class BuyBook:
                     self.__search()
                 case '4':
                     self.__most_expensive()
+                case '5':
+                    self.__delete()
 
 
 book = BuyBook()
