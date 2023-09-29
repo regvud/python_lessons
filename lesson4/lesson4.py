@@ -1,20 +1,15 @@
 # 1) Є ось такий файл... ваша задача записати в новий файл тільки email'ли з доменом gmail.com (Хеш то що з ліва
 # записувати не потрібно)
 
-# try:
-#     with open('emails.txt') as file:
-#         emails = file.read().split()
-# except Exception as err:
-#     print(err)
-#
-# try:
-#     with open('gmails.txt', 'w') as file:
-#         for email in emails:
-#             if email.endswith('@gmail.com'):
-#                 file.write(f'{email}\n')
-# except Exception as err:
-#     print(err)
-
+try:
+    with open('emails.txt') as efile:
+        emails = efile.read().split()
+    with open('gmails.txt', 'w') as gfile:
+        for email in emails:
+            if email.endswith('@gmail.com'):
+                gfile.write(f'{email}\n')
+except Exception as err:
+    print(err)
 
 # 2) Створити записну книжку покупок: - у покупки повинна бути id, назва і ціна - всі покупки зберігаємо в файлі з
 # функціоналу: * вивід всіх покупок * має бути змога додавати покупку в книгу * має бути змога шукати по будь якому
