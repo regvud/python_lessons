@@ -70,10 +70,10 @@ class BuyBook:
 
     def __search(self):
         search = input('What to search: ')
-        for item in self.__data:
-            for value in item.keys() | item.values():
-                if value == search:
-                    print(item)
+        for purchase in self.__data:
+            for search_value in purchase.keys() | purchase.values():
+                if search_value == search:
+                    print(purchase)
 
     def __delete(self):
         self.__show_items()
@@ -161,24 +161,27 @@ def gen(n):
         yield i
 
 
-teams = [gen(0), gen(1), gen(2)]
-res = []
+gen_list: list[gen] = []
+res: list = []
 
-while teams:
-    team = teams.pop(0)
+for generator in range(len(data)):
+    gen_list.append(gen(generator))
+
+while gen_list:
+    generator = gen_list.pop(0)
 
     try:
-        new = next(team)
-        if new not in res:
-            res.append(new)
-            teams.append(team)
+        item = next(generator)
+        if item not in res:
+            res.append(item)
+            gen_list.append(generator)
         else:
-            loser = next(team)
-            if loser not in res:
-                res.append(loser)
-                teams.append(team)
+            next_item = next(generator)
+            if next_item not in res:
+                res.append(next_item)
+                gen_list.append(generator)
     except StopIteration:
         pass
 
-for item in res:
-    print(item)
+for obj in res:
+    print(obj)
