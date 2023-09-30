@@ -156,34 +156,27 @@ data = [
 ]
 
 
-def gen1():
-    for i in data[0]:
+def gen(n):
+    for i in data[n]:
         yield i
 
 
-def gen2():
-    for i in data[1]:
-        yield i
-
-
-def gen3():
-    for i in data[2]:
-        yield i
-
-
-gen1 = gen1()
-gen2 = gen2()
-gen3 = gen3()
-
-teams = [gen1, gen2, gen3]
+teams = [gen(0), gen(1), gen(2)]
 res = []
 
 while teams:
     team = teams.pop(0)
 
     try:
-        print(next(team))
-
+        new = next(team)
+        if new not in res:
+            res.append(new)
+            teams.append(team)
+        else:
+            loser = next(team)
+            if loser not in res:
+                res.append(loser)
+                teams.append(team)
     except StopIteration:
         pass
 
