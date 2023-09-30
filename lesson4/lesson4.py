@@ -158,30 +158,31 @@ data = [
 
 def gen1():
     for i in data[0]:
-        yield f'gen1 - {i}'
+        yield i
 
 
 def gen2():
     for i in data[1]:
-        yield f'gen2 - {i}'
+        yield i
 
 
 def gen3():
     for i in data[2]:
-        yield f'gen3 - {i}'
+        yield i
 
 
-teams = [gen1(), gen2(), gen3()]
+gen1 = gen1()
+gen2 = gen2()
+gen3 = gen3()
+
+teams = [gen1, gen2, gen3]
 res = []
 
 while teams:
     team = teams.pop(0)
 
     try:
-        if team not in res:
-            res.append(next(team))
-        next(team)
-        teams.append(team)
+        print(next(team))
 
     except StopIteration:
         pass
