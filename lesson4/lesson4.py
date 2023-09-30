@@ -1,15 +1,15 @@
 # 1) Є ось такий файл... ваша задача записати в новий файл тільки email'ли з доменом gmail.com (Хеш то що з ліва
 # записувати не потрібно)
 
-try:
-    with open('emails.txt') as efile:
-        emails = efile.read().split()
-    with open('gmails.txt', 'w') as gfile:
-        for email in emails:
-            if email.endswith('@gmail.com'):
-                gfile.write(f'{email}\n')
-except Exception as err:
-    print(err)
+# try:
+#     with open('emails.txt') as efile:
+#         emails = efile.read().split()
+#     with open('gmails.txt', 'w') as gfile:
+#         for email in emails:
+#             if email.endswith('@gmail.com'):
+#                 gfile.write(f'{email}\n')
+# except Exception as err:
+#     print(err)
 
 # 2) Створити записну книжку покупок: - у покупки повинна бути id, назва і ціна - всі покупки зберігаємо в файлі з
 # функціоналу: * вивід всіх покупок * має бути змога додавати покупку в книгу * має бути змога шукати по будь якому
@@ -118,5 +118,73 @@ class BuyBook:
                     self.__delete()
 
 
-book = BuyBook()
-book.menu()
+# book = BuyBook()
+# book.menu()
+
+
+# потрібно брати по черзі с кожного списку id і класти в список res, якщо таке значення вже є в результуючому списку
+# то брати наступне з того ж підсписку
+#
+# з даним списком мае вийти ось такий результат:
+# res = [1110, 1120, 1130, 1111, 1122, .......]
+data = [
+    [
+        {"id": 1110, "field": {}},
+        {"id": 1111, "field": {}},
+        {"id": 1112, "field": {}},
+        {"id": 1113, "field": {}},
+        {"id": 1114, "field": {}},
+        {"id": 1115, "field": {}},
+    ],
+    [
+        {"id": 1110, "field": {}},
+        {"id": 1120, "field": {}},
+        {"id": 1122, "field": {}},
+        {"id": 1123, "field": {}},
+        {"id": 1124, "field": {}},
+        {"id": 1125, "field": {}},
+
+    ],
+    [
+        {"id": 1130, "field": {}},
+        {"id": 1131, "field": {}},
+        {"id": 1122, "field": {}},
+        {"id": 1132, "field": {}},
+        {"id": 1133, "field": {}},
+
+    ]
+]
+
+
+def gen1():
+    for i in data[0]:
+        yield f'gen1 - {i}'
+
+
+def gen2():
+    for i in data[1]:
+        yield f'gen2 - {i}'
+
+
+def gen3():
+    for i in data[2]:
+        yield f'gen3 - {i}'
+
+
+teams = [gen1(), gen2(), gen3()]
+res = []
+
+while teams:
+    team = teams.pop(0)
+
+    try:
+        if team not in res:
+            res.append(next(team))
+        next(team)
+        teams.append(team)
+
+    except StopIteration:
+        pass
+
+for item in res:
+    print(item)
