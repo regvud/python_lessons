@@ -162,7 +162,7 @@ def gen(n):
 
 
 gen_list: list[gen] = []
-res: list = []
+res = []
 
 for generator in range(len(data)):
     gen_list.append(gen(generator))
