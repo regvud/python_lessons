@@ -167,18 +167,19 @@ res = []
 for generator in range(len(data)):
     gen_list.append(gen(generator))
 
+
 while gen_list:
     generator = gen_list.pop(0)
 
     try:
         item = next(generator)
-        if item not in res:
-            res.append(item)
+        if item['id'] not in res:
+            res.append(item['id'])
             gen_list.append(generator)
         else:
             next_item = next(generator)
-            if next_item not in res:
-                res.append(next_item)
+            if next_item['id'] not in res:
+                res.append(next_item['id'])
                 gen_list.append(generator)
     except StopIteration:
         pass
